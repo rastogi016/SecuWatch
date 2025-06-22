@@ -71,7 +71,7 @@ const Login = ({ onLogin }) => {
         </form>
       </div>
       <div className="hidden md:flex w-1/3 bg-[#bfe1d3] flex-col items-center justify-center text-center p-10">
-        <img src="/public/secuwatch-green.png" alt="SecuWatch.png" className="max-h-60"/>
+        <img src="/secuwatch-green.png" alt="SecuWatch.png" className="max-h-60"/>
         <p className="text-xl text-emerald-600 font-bold tracking-wide">
           Watch. Detect. Secure.
         </p>

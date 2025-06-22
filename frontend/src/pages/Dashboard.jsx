@@ -64,7 +64,7 @@ const Dashboard = ({ alerts }) => {
 
       {/* Recent Alerts Table */}
       <div className="bg-gray-900 rounded-xl p-5 shadow">
-        <h2 className="text-xl font-semibold text-white mb-4">Recent Alerts (last 2 min)</h2>
+        <h2 className="text-xl font-semibold text-white mb-4">Recent Alerts</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-white">
             <thead className="text-gray-400 border-b border-gray-700">

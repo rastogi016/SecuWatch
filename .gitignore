@@ -12,3 +12,6 @@ dist/
 
 # DB
 *.db
+
+# AlertFiles
+alert_*.json

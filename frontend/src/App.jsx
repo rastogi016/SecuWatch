@@ -11,6 +11,8 @@ import Windows from "./pages/Windows";
 import Linux from "./pages/Linux";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Privacy from  './pages/privacy';
+import Terms from  './pages/terms';
 
 const App = () => {
   const [alerts, setAlerts] = useState({ apache: [], windows: [], linux: [] });
@@ -26,12 +28,6 @@ const App = () => {
   const handleLogin = () => {
     setIsAuthenticated(true);
     navigate("/");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-    navigate("/login");
   };
 
   useAlertWebSocket((newAlert) => {
@@ -82,6 +78,9 @@ const App = () => {
         <Route path="/windows" element={<Windows alerts={alerts.windows} />} />
         <Route path="/linux" element={<Linux alerts={alerts.linux} />} />
       </Route>
+      
+      <Route path="/privacy" element={<Privacy  />} />
+      <Route path="/terms" element={<Terms />} />
 
       {/* Catch All */}
       <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />

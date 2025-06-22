@@ -12,7 +12,7 @@ const Footer = () => {
         </span>
         <div className="flex space-x-6 text-sm items-center">
           <a
-            href="https://github.com/YOUR_GITHUB"
+            href="https://github.com/rastogi016/SecuWatch"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline hover:text-white flex items-center gap-1"
@@ -20,11 +20,11 @@ const Footer = () => {
             <FaGithub />
             GitHub
           </a>
-          <a href="/privacy" className="hover:underline hover:text-white flex items-center gap-1">
+          <a href="/privacy" target="__blank" className="hover:underline hover:text-white flex items-center gap-1">
             <FcPrivacy />
             Privacy
           </a>
-          <a href="/terms" className="hover:underline hover:text-white flex items-center gap-1">
+          <a href="/terms" target="__blank" className="hover:underline hover:text-white flex items-center gap-1">
             <VscThreeBars />
             Terms
           </a>

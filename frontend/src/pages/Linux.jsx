@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AlertGroup from '../components/AlertGroup';
+import LinuxHandler from '../handlers/LinuxHandler';
 import SeverityFilterBar from '../components/filters/SeverityFilterBar';
 import TimeFilter from '../components/filters/TimeFilter';
 
@@ -39,7 +39,7 @@ const Linux = ({ alerts }) => {
         />
       </div>
       
-      <AlertGroup alerts={filteredAlerts} />
+      <LinuxHandler alerts={filteredAlerts} />
     </div>
   );
 };

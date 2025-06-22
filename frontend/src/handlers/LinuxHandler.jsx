@@ -1,6 +1,6 @@
 import LinuxLogCard from '../logCards/LinuxLogCard'
 
-const AlertGroup = ({ alerts, source }) => {
+const LinuxHandler = ({ alerts}) => {
   return (
     <div className="mt-6 pb-20 font-jetBrains_mono">
       {alerts.length === 0 ? (
@@ -12,4 +12,4 @@ const AlertGroup = ({ alerts, source }) => {
   );
 };
 
-export default AlertGroup;
+export default LinuxHandler;

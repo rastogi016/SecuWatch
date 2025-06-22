@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AlertGroup from '../components/AlertGroup';
+import ApacheHandler from '../handlers/ApacheHandler';
 import SeverityFilterBar from '../components/filters/SeverityFilterBar';
 import TimeFilter from '../components/filters/TimeFilter';
 
@@ -38,8 +38,7 @@ const Apache = ({ alerts }) => {
           onSelect={setSelectedTimeRange}
         />
       </div>
-      
-      <AlertGroup alerts={filteredAlerts} />
+      <ApacheHandler alerts={filteredAlerts} />
     </div>
   );
 };

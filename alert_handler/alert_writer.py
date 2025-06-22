@@ -9,8 +9,6 @@ from config.time_config import (
     get_iso_timestamp,
     get_local_timestamp,
 )
-
-
 # Import only if running the backend WebSocket server
 def write_alert(source, alert_data):
     # Ensure alerts/source directory exists

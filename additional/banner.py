@@ -1,10 +1,11 @@
 import pyfiglet
 from termcolor import colored
+from colorama import init, Fore, Style
 import random
 import shutil
 
-
 def bannerSecuWatch():
+    init()
     # Get terminal width for centering
     term_width = shutil.get_terminal_size().columns
 

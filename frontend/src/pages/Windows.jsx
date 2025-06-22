@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AlertGroup from '../components/AlertGroup';
+import WindowsHandler from '../handlers/WindowsHandler';
 import SeverityFilterBar from '../components/filters/SeverityFilterBar';
 import TimeFilter from '../components/filters/TimeFilter';
 
@@ -39,7 +39,7 @@ const Windows = ({ alerts }) => {
         />
       </div>
       
-      <AlertGroup alerts={filteredAlerts} />
+      <WindowsHandler alerts={filteredAlerts} />
     </div>
   );
 };
