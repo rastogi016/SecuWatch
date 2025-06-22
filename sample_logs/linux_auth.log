@@ -1,0 +1,7 @@
+Jun 10 23:41:12 kali sshd[1542]: Failed password for yash from 192.168.1.100 port 2222 ssh2
+Jun 10 23:42:10 kali sshd[1542]: Accepted password for root from 192.168.1.100 port 22 ssh2
+Jun 10 23:41:12 kali sshd[1542]: Failed password for yash from 192.168.1.100 port 2222 ssh2
+Jun 10 23:42:10 kali sshd[1542]: Accepted password for root from 192.168.1.100 port 22 ssh2
+Jun 11 10:45:10 kali sshd[1366]: Failed password for yash from 192.183.5.74 port 2255 ssh2 
+Jun 11 10:45:10 kali sshd[1366]: Accepted password for yash from 192.83.150.74 port 2255 ssh2
+Jun 11 10:45:10 kali sshd[1366]: Accepted password for root from 192.83.15.74 port 2255 ssh2

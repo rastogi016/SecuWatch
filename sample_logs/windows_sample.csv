@@ -1,0 +1,3 @@
+Date,Time,EventID,AccountName,LogonType,WorkstationName,SourceNetworkAddress,Message
+2025-06-07, 11:35:02, 4625, yash, 3, WIN-PC, 192.168.1.100, An account failed to log on.
+2025-06-07, 11:36:55, 4624, admin, 10, WIN-PC, 192.168.1.200, An account successfully logged on.

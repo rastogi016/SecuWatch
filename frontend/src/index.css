@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body{
+  height: 100%;
+  width: 100%;
+}
+.gradient-bg-login {
+  background: linear-gradient(-45deg, #0f172a 10%, #101c3e 25%, #1c3c4a 40%, #11986d 100%);
+}
+
+.gradient-bg-main{
+  background: #061724;
+  background: linear-gradient(0deg, #0C0C0F 20%, rgb(32, 0, 39) 90%, rgb(37, 1, 46) 100%);
+}
+/* Hide scrollbar for Chrome, Safari and Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+body {
+  scrollbar-width: none;
+}

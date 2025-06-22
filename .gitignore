@@ -1,0 +1,14 @@
+# Ignore Python cache & environment
+__pycache__/
+*.pyc
+venv/
+
+# Environment variables
+.env
+
+# Frontend build
+node_modules/
+dist/
+
+# DB
+*.db
