@@ -208,4 +208,4 @@ MIT License © Threat Sage
 ## 🧠 Author
 
 **Yash Rastogi**  
-[LinkedIn](https://www.linkedin.com/in/yashrastogi11) · [GitHub](https://github.com/your-profile)
+[LinkedIn](https://www.linkedin.com/in/yashrastogi11) · [GitHub](https://github.com/rastogi016)
