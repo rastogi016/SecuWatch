@@ -1,0 +1,22 @@
+{
+    "alert_type": "Failed SSH Login",
+    "ip": "192.183.5.74",
+    "user": "yash",
+    "port": "2255",
+    "raw_log": "Jun 11 10:45:10 kali sshd[1366]: Failed password for yash from 192.183.5.74 port 2255 ssh2",
+    "cti": {
+        "ip_lookup": {
+            "ip": "192.183.5.74",
+            "isPublic": true,
+            "abuseConfidenceScore": 0,
+            "country": "US",
+            "totalReports": 0,
+            "domain": "frontier.com",
+            "lastReportedAt": null
+        }
+    },
+    "severity": "medium",
+    "source": "linux",
+    "generated_at": "2025-06-22 11:40:08",
+    "alert_id": "3b03d25b-0511-49be-b0de-d2b87a2c2e9f"
+}

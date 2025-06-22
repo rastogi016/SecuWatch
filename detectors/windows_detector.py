@@ -4,11 +4,12 @@ from cti_module.cti_lookup import CTIlookup
 from custom_fields.severity import calculate_severity_windows
 import hashlib
 
+
 def get_file_hash(file_path, algo="sha256"):
     try:
         hash_func = getattr(hashlib, algo.lower())()
 
-        with open(file_path, 'rb') as f:
+        with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_func.update(chunk)
 
@@ -17,7 +18,9 @@ def get_file_hash(file_path, algo="sha256"):
         print(f"[ERROR] Cannot hash {file_path}: {e}")
         return None
 
+
 cti = CTIlookup()
+
 
 def parse_windows_log(data):
     try:
@@ -39,7 +42,7 @@ def parse_windows_log(data):
 
         # === Failed Login Detection (4625) ===
         if event_id == "4625":
-            
+
             if ip_cti_data and ip_cti_data.get("abuseConfidenceScore", 0) >= 0:
                 alert_data = {
                     "alert_type": "Suspicious Failed Login (Malicious IP)",
@@ -48,7 +51,7 @@ def parse_windows_log(data):
                     "ip": source_ip,
                     "message": log_message,
                     "cti": ip_cti_data,
-                    "raw_log": raw_log
+                    "raw_log": raw_log,
                 }
             elif account.lower() not in ["anonymous", "-", "null"]:
                 alert_data = {
@@ -57,7 +60,7 @@ def parse_windows_log(data):
                     "account": account,
                     "ip": source_ip,
                     "message": log_message,
-                    "raw_log": raw_log
+                    "raw_log": raw_log,
                 }
 
         elif event_id == "4688":
@@ -83,21 +86,24 @@ def parse_windows_log(data):
                                 "cmdline": cmdline,
                                 "cti": hash_cti,
                                 "account": data.get("AccountName", ""),
-                                "raw_log": raw_log
+                                "raw_log": raw_log,
                             }
                     elif "error" in hash_cti:
                         print(f"[INFO] CTI Lookup Error: {hash_cti['error']}")
 
-
         # === Privilege Escalation Indicators ===
-        elif event_id in ["4672", "4673", "4698"]:  # Special privileges assigned, Svc creation, sensitive token
+        elif event_id in [
+            "4672",
+            "4673",
+            "4698",
+        ]:  # Special privileges assigned, Svc creation, sensitive token
             alert_data = {
                 "alert_type": "Potential Privilege Escalation",
                 "event_id": event_id,
                 "account": account,
                 "ip": source_ip,
                 "message": log_message,
-                "raw_log": raw_log
+                "raw_log": raw_log,
             }
         # If Alert_data generated
         if alert_data:
@@ -108,6 +114,3 @@ def parse_windows_log(data):
         print(f"[ERROR] Failed to parse Windows log: {e}")
 
     return None
-
-
-

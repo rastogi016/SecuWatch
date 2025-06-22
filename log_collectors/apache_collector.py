@@ -3,9 +3,8 @@ from alert_handler.alert_writer import write_alert
 
 
 def collect_apache_logs(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         for line in f:
             result = parse_apache_log(line)
             if result:
                 write_alert("apache", result)
-    

@@ -2,7 +2,7 @@ from cti_lookup import CTIlookup
 
 lookup = CTIlookup()
 
-result = lookup.lookup_ip("45.33.32.156") # Malicious IP
+result = lookup.lookup_ip("45.33.32.156")  # Malicious IP
 print(result)
 
 # SHA-256 for EICAR test virus (safe dummy malware file)

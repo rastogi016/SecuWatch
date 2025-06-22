@@ -3,12 +3,13 @@ from termcolor import colored
 import random
 import shutil
 
+
 def bannerSecuWatch():
     # Get terminal width for centering
     term_width = shutil.get_terminal_size().columns
 
     # Random color
-    colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+    colors = ["red", "green", "yellow", "blue", "magenta", "cyan", "white"]
     color = random.choice(colors)
 
     sub_color = random.choice(colors)

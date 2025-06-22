@@ -1,0 +1,22 @@
+{
+    "alert_type": "Root SSH Login",
+    "ip": "192.168.1.100",
+    "user": "root",
+    "port": "22",
+    "raw_log": "Jun 10 23:42:10 kali sshd[1542]: Accepted password for root from 192.168.1.100 port 22 ssh2",
+    "cti": {
+        "ip_lookup": {
+            "ip": "192.168.1.100",
+            "isPublic": false,
+            "abuseConfidenceScore": 0,
+            "country": null,
+            "totalReports": 8,
+            "domain": null,
+            "lastReportedAt": "2025-06-15T21:45:57+00:00"
+        }
+    },
+    "severity": "critical",
+    "source": "linux",
+    "generated_at": "2025-06-22 11:39:57",
+    "alert_id": "35a010f9-9fb9-4e44-a756-ce238d755d0e"
+}

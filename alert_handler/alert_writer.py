@@ -7,8 +7,9 @@ from uuid import uuid4
 from config.time_config import (
     get_current_utc_timestamp,
     get_iso_timestamp,
-    get_local_timestamp
+    get_local_timestamp,
 )
+
 
 # Import only if running the backend WebSocket server
 def write_alert(source, alert_data):
@@ -17,17 +18,21 @@ def write_alert(source, alert_data):
     os.makedirs(alert_dir, exist_ok=True)
 
     # Create alert file with timestamp
-    filename = os.path.join(alert_dir, f"alert_{datetime.utcnow().strftime('%Y%m%d%H%M%S%f')}.json")
+    filename = os.path.join(
+        alert_dir, f"alert_{datetime.utcnow().strftime('%Y%m%d%H%M%S%f')}.json"
+    )
 
     # Add metadata
-    alert_data.update({
-        "source": source,
-        "generated_at": get_local_timestamp(),
-        "alert_id": str(uuid4())
-    })
+    alert_data.update(
+        {
+            "source": source,
+            "generated_at": get_local_timestamp(),
+            "alert_id": str(uuid4()),
+        }
+    )
 
     # Save the alert
-    with open(filename, 'w') as f:
+    with open(filename, "w") as f:
         json.dump(alert_data, f, indent=4)
 
     print(f"[+] Alert Written: {filename}")

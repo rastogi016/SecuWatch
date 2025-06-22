@@ -19,15 +19,18 @@ app.add_middleware(
 models.Base.metadata.create_all(bind=engine)
 app.include_router(auth_router)
 
+
 @app.get("/alerts")
 def read_alerts():
     return get_all_alerts_grouped_by_source()
+
 
 @app.post("/push_alert")
 async def push_alert(request: Request):
     alert_data = await request.json()
     await ws_manager.broadcast(alert_data)
     return {"status": "broadcasted"}
+
 
 @app.websocket("/ws/alerts")
 async def websocket_endpoint(websocket: WebSocket):

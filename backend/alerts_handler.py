@@ -4,12 +4,9 @@ import json
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # One level up from backend/
 ALERTS_DIR = os.path.join(BASE_DIR, "alerts")
 
+
 def get_all_alerts_grouped_by_source():
-    grouped_alerts = {
-        "apache": [],
-        "windows": [],
-        "linux": []
-    }
+    grouped_alerts = {"apache": [], "windows": [], "linux": []}
 
     for source in grouped_alerts.keys():
         source_dir = os.path.join(ALERTS_DIR, source)
@@ -28,7 +25,7 @@ def get_all_alerts_grouped_by_source():
                 continue
 
             try:
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     alert = json.load(f)
                     grouped_alerts[source].append(alert)
                     print(f"[DEBUG] Loaded {filename} into {source}")

@@ -7,6 +7,7 @@ from log_collectors.windows_realtime_monitor import monitor_windows_logs
 from log_collectors.linux_realtime_monitor import monitor_linux_logs
 from additional.banner import bannerSecuWatch
 
+
 def static_mode():
     print("[*] Static Log Analysis Mode")
     try:
@@ -22,10 +23,15 @@ def static_mode():
     except KeyboardInterrupt:
         print("\n[!] monitoring stopped by user.")
 
+
 def realtime_mode():
     print("[*] Real-Time Monitoring Mode")
-    try:    
-        sources = input("Select Sources (comma separated) [apache, windows, linux]: ").lower().split(",")
+    try:
+        sources = (
+            input("Select Sources (comma separated) [apache, windows, linux]: ")
+            .lower()
+            .split(",")
+        )
         for source in sources:
             source = source.strip()
             if source == "apache":
