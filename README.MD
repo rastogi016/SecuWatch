@@ -65,7 +65,6 @@ SecuWatch/
 ├── secuwatch.db                 # SQLite database (users, etc.)
 ├── install.py                   # Setup script
 ├── main.py                      # Starts static/realtime log analysis
-├── MasterRun.py                 # Runs backend + frontend together
 ├── requirements.txt             # Python backend dependencies 
 └── README.md
 
@@ -115,7 +114,7 @@ cd SecuWatch
 
 ---
 
-## 🚦 Launch the Application
+## 🚦 Launch the Application with Three Terminals
 
 - Start backend only:
   ```bash
@@ -132,6 +131,8 @@ cd SecuWatch
   ```bash
   python main.py
   ```
+## For Windows 
+- Need Administrative Privilege
 
 You will see:
 - 🔁 `main.py` (log monitoring engine)
