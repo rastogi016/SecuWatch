@@ -71,7 +71,7 @@ const ApacheLogCard = ({ alert }) => {
 
         {/* Raw Log */}
         {showRaw && (
-          <div className="bg-black p-4 rounded-md font-mono text-sm text-gray-200 overflow-auto max-h-60 border border-gray-700 flex-1">
+          <div className="bg-black p-4 rounded-md font-mono text-sm text-gray-200 overflow-auto max-h-96 border border-gray-700 flex-1">
             <span className="block text-yellow-400 font-semibold mb-2">Raw Log</span>
             <code>{raw_log || "No raw log available."}</code>
           </div>
@@ -93,7 +93,6 @@ const ApacheLogCard = ({ alert }) => {
                 </ul>
               </div>
             )}
-
             {/* URL Info */}
             {urlLookup && (
               <div>
