@@ -1,7 +1,6 @@
 # 🛡️ SecuWatch: Threat Detection & Response Framework (v1.0)
 
 **SecuWatch** is a full-stack cybersecurity tool for real-time log analysis, threat detection, and alert visualization. It integrates **FastAPI** (backend), **React + Tailwind CSS** (frontend), and **WebSockets** for live alert streaming. It supports authentication, CTI enrichment, and analytics dashboards — all in one lightweight solution.
-![Dashboard](assets/Dashboard.png)
 ---
 
 ## 📁 Project Structure
