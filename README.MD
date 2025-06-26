@@ -3,10 +3,15 @@
 **SecuWatch** is a full-stack cybersecurity tool for real-time log analysis, threat detection, and alert visualization. It integrates **FastAPI** (backend), **React + Tailwind CSS** (frontend), and **WebSockets** for live alert streaming. It supports authentication, CTI enrichment, and analytics dashboards — all in one lightweight solution.
 
 ![Login Page](assets/Login_Page.png)
+
 ![Dashboard](assets/Dashboard.png)
+
 ![Analytics Tab](assets/Analytics.png)
+
 ![Apache Alerts](assets/Apache.png)
+
 ![Windows Alerts](assets/Windows.png)
+
 ![Linux Alerts](assets/Linux.png)
 
 ---
