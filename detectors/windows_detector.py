@@ -105,6 +105,91 @@ def parse_windows_log(data):
                 "message": log_message,
                 "raw_log": raw_log,
             }
+        # === User Account Created (4720) ===
+        elif event_id == "4720":
+            alert_data = {
+                "alert_type": "Suspicious Account Creation",
+                "event_id": event_id,
+                "account": account,
+                "message": log_message,
+                "raw_log": raw_log,
+            }
+
+        # === User Added to Privileged Group (4728) ===
+        elif event_id == "4728":
+            alert_data = {
+                "alert_type": "Privilege Group Modification",
+                "event_id": event_id,
+                "account": account,
+                "message": log_message,
+                "raw_log": raw_log,
+            }
+
+        # === Security Log Cleared (1102) ===
+        elif event_id == "1102":
+            alert_data = {
+                "alert_type": "Security Log Cleared",
+                "event_id": event_id,
+                "account": account,
+                "message": log_message,
+                "raw_log": raw_log,
+            }
+
+        # === Explicit Credential Use (4648) ===
+        elif event_id == "4648":
+            if ip_cti_data and ip_cti_data.get("abuseConfidenceScore", 0) >= 0:
+                alert_data = {
+                    "alert_type": "Suspicious Explicit Credential Logon (Malicious IP)",
+                    "event_id": event_id,
+                    "account": account,
+                    "ip": source_ip,
+                    "cti": ip_cti_data,
+                    "message": log_message,
+                    "raw_log": raw_log,
+                }
+            else:
+                alert_data = {
+                    "alert_type": "Explicit Credential Use Detected",
+                    "event_id": event_id,
+                    "account": account,
+                    "ip": source_ip,
+                    "message": log_message,
+                    "raw_log": raw_log,
+                }
+
+        # === New Service Installed (4697) ===
+        elif event_id == "4697":
+            alert_data = {
+                "alert_type": "Potential Persistence via New Service",
+                "event_id": event_id,
+                "account": account,
+                "message": log_message,
+                "raw_log": raw_log,
+            }
+
+        # === Kerberoasting Attempt (4769) ===
+        elif event_id == "4769":
+            service_name = data.get("ServiceName", "")
+            if service_name and "$" not in service_name:  # SPNs without $ often targeted
+                alert_data = {
+                    "alert_type": "Potential Kerberoasting Detected",
+                    "event_id": event_id,
+                    "account": account,
+                    "service": service_name,
+                    "message": log_message,
+                    "raw_log": raw_log,
+                }
+
+        # === Audit Policy Change (4719) ===
+        elif event_id == "4719":
+            alert_data = {
+                "alert_type": "Audit Policy Change Detected",
+                "event_id": event_id,
+                "account": account,
+                "message": log_message,
+                "raw_log": raw_log,
+            }
+
         # If Alert_data generated
         if alert_data:
             alert_data["severity"] = calculate_severity_windows(alert_data)
