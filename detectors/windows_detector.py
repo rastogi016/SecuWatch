@@ -21,7 +21,6 @@ def get_file_hash(file_path, algo="sha256"):
 
 cti = CTIlookup()
 
-
 def parse_windows_log(data):
     try:
         event_id = str(data.get("EventID"))
@@ -179,7 +178,7 @@ def parse_windows_log(data):
                     "message": log_message,
                     "raw_log": raw_log,
                 }
-
+ 
         # === Audit Policy Change (4719) ===
         elif event_id == "4719":
             alert_data = {
