@@ -15,19 +15,20 @@ def write_alert(source, alert_data):
     alert_dir = os.path.join("alerts", source)
     os.makedirs(alert_dir, exist_ok=True)
 
-    # Create alert file with timestamp
-    filename = os.path.join(
-        alert_dir, f"alert_{datetime.utcnow().strftime('%Y%m%d%H%M%S%f')}.json"
-    )
 
     # Add metadata
+    alert_id= str(uuid4())
     alert_data.update(
         {
             "source": source,
             "generated_at": get_local_timestamp(),
-            "alert_id": str(uuid4()),
+            "alert_id": alert_id,
+            "status": "New",
         }
     )
+
+    # Create alert file with alert_id
+    filename = os.path.join(alert_dir, f"{alert_id}.json")
 
     # Save the alert
     with open(filename, "w") as f:

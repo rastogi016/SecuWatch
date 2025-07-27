@@ -5,10 +5,10 @@ import { VscThreeBars } from "react-icons/vsc";
 
 const Footer = () => {
   return (
-    <div className="w-full absolute bottom-0 h-20 bg-brand-te_black text-gray-300 py-4 px-6">
+    <div className="w-full absolute bottom-0 h-20 bg-[#030712] text-gray-300 py-4 px-6">
       <div className="flex flex-col md:flex-row justify-between items-center h-full">
         <span className="mb-2 md:mb-0 text-sm">
-          © {new Date().getFullYear()} <strong>SecuWatch<sub>v1.0</sub></strong> by <strong>ThreatSage</strong>, All rights reserved.
+          © {new Date().getFullYear()} <strong>SecuWatch<sub>v1.1</sub></strong> by <strong>ThreatSage</strong>, All rights reserved.
         </span>
         <div className="flex space-x-6 text-sm items-center">
           <a

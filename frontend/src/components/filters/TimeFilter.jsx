@@ -1,7 +1,7 @@
 import React from "react";
 
 const timeRanges = [
-  { label: "All", minutes: null },
+  { label: "All Time", minutes: null },
   { label: "Last 5 mins", minutes: 5 },
   { label: "Last 15 mins", minutes: 15 },
   { label: "Last 30 mins", minutes: 30 },

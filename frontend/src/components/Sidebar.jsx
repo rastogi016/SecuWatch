@@ -11,7 +11,7 @@ const Sidebar = () => {
       {/* Hamburger menu for mobile */}
       <div className="md:hidden flex items-start p-4 mt-3">
         <button onClick={() => setIsOpen(!isOpen)} className="text-white text-2xl">
-          {isOpen ? <FaTimes /> : <FaBars />}
+          <FaBars />
         </button>
       </div>
 
@@ -23,10 +23,10 @@ const Sidebar = () => {
 
       {/* Sliding Sidebar for mobile */}
       {isOpen && (
-        <div className="fixed inset-0 bg-brand-te_black bg-opacity-40 z-10">
-          <div className="w-60 h-full gradient-bg-main pr-4 flex flex-col">
+        <div className="fixed inset-0 bg-opacity-95 z-10 bg-[#030712]">
+          <div className="w-60 h-full pr-4 flex flex-col">
             {/* Close button inside sidebar */}
-            <div className="flex justify-end  md:hidden">
+            <div className="flex justify-end md:hidden">
               <button onClick={() => setIsOpen(false)} className="text-white text-xl mt-4">
                 <FaTimes />
               </button>
@@ -40,9 +40,9 @@ const Sidebar = () => {
   )
 }
 const Logo = () => (
-  <div className="h-20 flex items-center justify-center">
+  <div className="h-20 flex items-center justify-center ml-4">
     <img src="/secuwatch-logo-white.png" alt="SecWatchLogo" className="h-14 w-auto ml-4 " />
-    <h1 className="text-3xl font-bold text-white mr-4">SecuWatch</h1>
+    <h1 className="text-3xl font-bold mr-4">SecuWatch</h1>
   </div>
 );
 

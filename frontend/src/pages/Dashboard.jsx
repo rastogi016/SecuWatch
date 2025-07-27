@@ -32,19 +32,19 @@ const Dashboard = ({ alerts }) => {
   );
 
   return (
-    <div className="px-6 space-y-6 min-h-screen mb-10">
+    <div className="px-6 space-y-10 min-h-screen mb-10">
       <h1 className="text-3xl font-bold text-white text-center">Dashboard Overview</h1>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label="Total Alerts" value={allAlerts.length}/>
-        <StatCard label="Critical" value={allAlerts.filter(a => a.severity === 'critical').length} color="bg-red-800" />
+        <StatCard label="Critical" value={allAlerts.filter(a => a.severity === 'critical').length} color="bg-red-800"/>
         <StatCard label="High" value={allAlerts.filter(a => a.severity === 'high').length} color="bg-orange-700" />
         <StatCard label="Medium" value={allAlerts.filter(a => a.severity === 'medium').length} color="bg-yellow-500" />
       </div>
 
       {/* Live Feed */}
-      <div className="bg-gray-900 rounded-xl p-4 shadow">
+      <div className=" rounded-xl p-4 border-cyan-500 shadow-cyan-400 shadow-[0_0_8px]">
         <h2 className="text-xl font-semibold text-white mb-4">Live Alert Feed</h2>
         <ul className="space-y-3 max-h-64 overflow-y-auto">
           {liveFeedAlerts.length === 0 ? (
@@ -63,7 +63,7 @@ const Dashboard = ({ alerts }) => {
       </div>
 
       {/* Recent Alerts Table */}
-      <div className="bg-gray-900 rounded-xl p-5 shadow">
+      <div className="rounded-xl p-5 border-cyan-500 shadow-cyan-400 shadow-[0_0_8px] ">
         <h2 className="text-xl font-semibold text-white mb-4">Recent Alerts</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-white">
@@ -104,11 +104,26 @@ const Dashboard = ({ alerts }) => {
   );
 };
 
-const StatCard = ({ label, value, color = "bg-gray-800" }) => (
-  <div className={`rounded-xl p-4 text-white ${color} shadow-md`}>
-    <p className="text-sm font-semibold">{label}</p>
-    <h3 className="text-2xl font-bold">{value}</h3>
-  </div>
-);
+const StatCard = ({ label, value, color = "bg-gray-800" }) => {
+  const gradientBorderMap = {
+    "bg-red-800": "from-red-500 via-[#1D0223] to-[#030712",
+    "bg-orange-700": "from-orange-400 via-[#1D0223] to-[#030712]",
+    "bg-yellow-500": "from-yellow-400 via-[#1D0223] to-[#030712]",
+    "bg-green-500": "from-green-300 via-[#1D0223] to-[#030712]",
+    "bg-gray-800": "from-gray-400 via-[#1D0223] to-[#030712]",
+  };
+
+  const gradient = gradientBorderMap[color] || "from-gray-400 via-[#1D0223] to-[#1D0223]";
+
+  return (
+    <div className={`p-[2px] rounded-xl bg-gradient-to-tl ${gradient} shadow-lg`}>
+      <div className={`rounded-xl bg-[#030712] p-4`}>
+        <p className="text-sm font-semibold">{label}</p>
+        <h3 className="text-2xl font-bold">{value}</h3>
+      </div>
+    </div>
+  );
+};
+
 
 export default Dashboard;

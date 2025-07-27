@@ -14,4 +14,7 @@ dist/
 *.db
 
 # AlertFiles
-alert_*.json
+*.json
+
+#Fix File
+fix.py

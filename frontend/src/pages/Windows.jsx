@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import WindowsHandler from '../handlers/WindowsHandler';
-import SeverityFilterBar from '../components/filters/SeverityFilterBar';
+import SeverityFilterDropdown from '../components/filters/SeverityFilterDropdown';
 import TimeFilter from '../components/filters/TimeFilter';
 
 const Windows = ({ alerts }) => {
@@ -29,7 +29,7 @@ const Windows = ({ alerts }) => {
 
       {/* Filters Row */}
       <div className="flex flex-wrap items-center justify-between mb-8">
-        <SeverityFilterBar
+        <SeverityFilterDropdown
           selected={selectedSeverity}
           onSelect={setSelectedSeverity}
         />

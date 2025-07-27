@@ -1,20 +1,23 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-const ApacheLogCard = ({ alert }) => {
+const ApacheLogCard = ({ alert}) => {
   const [showRaw, setShowRaw] = useState(false);
   const [showCTI, setShowCTI] = useState(false);
+  const [status, setStatus] = useState(alert.status || "New");
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const {
     alert_id,
     alert_type,
     severity,
-    source,
     ip,
     method,
     path,
     status_code,
     generated_at,
     raw_log,
+    source,
     cti
   } = alert;
 
@@ -41,12 +44,41 @@ const ApacheLogCard = ({ alert }) => {
   const ipLookup = cti?.ip_lookup;
   const urlLookup = cti?.url_lookup;
 
+  const handleStatusChange = async (e) => {
+    const newStatus = e.target.value;
+    setStatus(newStatus);
+    setIsUpdating(true);
+    try {
+      await axios.patch(
+        `http://localhost:8000/alerts/${source}/${alert_id}/status`,
+        { status: newStatus },
+        { headers: { "Content-Type": "application/json" } }
+      );
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      // Optional: Revert status on failure
+    } finally {
+      setIsUpdating(false);
+    }
+    console.log("Updating status for", source, alert_id, "→", newStatus);
+  };
+
   return (
     <div className="bg-gray-800 rounded-lg p-4 text-white space-y-4 mb-4">
       {/* Header and Buttons */}
       <div className="flex flex-wrap justify-between items-center gap-3">
-        <h2 className="text-lg font-semibold">{ alert.alert_type }</h2>
-        <div className="flex gap-2">
+        <h2 className="text-lg font-semibold">{alert_type}</h2>
+        <div className="flex gap-2 items-center">
+          <select
+            value={alert.status}
+            onChange={handleStatusChange}
+            disabled={isUpdating}
+            className="px-2 py-1 text-sm bg-gray-700 text-white rounded border border-gray-500"
+          >
+            <option value="New">🟢 New</option>
+            <option value="In Progress">🟡 In Progress</option>
+            <option value="Resolved">✅ Resolved</option>
+          </select>
           <button
             onClick={() => setShowRaw(!showRaw)}
             className="px-3 py-1 text-sm bg-purple-900 hover:bg-purple-600 text-gray-300 hover:text-white rounded transition"
@@ -62,14 +94,12 @@ const ApacheLogCard = ({ alert }) => {
         </div>
       </div>
 
-      {/* Responsive Flex Row on md+, Column on small screens */}
+      {/* Flex Layout */}
       <div className="flex flex-col md:flex-row gap-4">
-        {/* Formatted Info */}
         <div className="bg-gray-900 p-4 rounded-md font-mono whitespace-pre-wrap text-sm text-green-200 flex-1">
           {formattedLog}
         </div>
 
-        {/* Raw Log */}
         {showRaw && (
           <div className="bg-black p-4 rounded-md font-mono text-sm text-gray-200 overflow-auto max-h-96 border border-gray-700 flex-1">
             <span className="block text-yellow-400 font-semibold mb-2">Raw Log</span>
@@ -77,15 +107,12 @@ const ApacheLogCard = ({ alert }) => {
           </div>
         )}
 
-        {/* CTI Info */}
         {showCTI && (ipLookup || urlLookup) && (
           <div className="bg-gray-900 p-4 rounded-md border border-gray-700 text-sm text-gray-300 flex-1 overflow-auto max-h-96">
             <h3 className="text-md font-semibold text-purple-400 mb-3">🧠 Threat Intelligence</h3>
-
-            {/* IP Info */}
             {ipLookup && (
               <div className="mb-4">
-                <p className="text-sm mb-1"> <strong>IP Lookup</strong></p>
+                <p className="text-sm mb-1"><strong>IP Lookup</strong></p>
                 <ul className="list-disc list-inside">
                   <li><strong>Abuse Confidence:</strong> {ipLookup.abuseConfidenceScore}</li>
                   <li><strong>Total Reports:</strong> {ipLookup.totalReports}</li>
@@ -93,10 +120,9 @@ const ApacheLogCard = ({ alert }) => {
                 </ul>
               </div>
             )}
-            {/* URL Info */}
             {urlLookup && (
               <div>
-                <p className="text-sm mb-1"> <strong>URL Lookup</strong></p>
+                <p className="text-sm mb-1"><strong>URL Lookup</strong></p>
                 <ul className="list-disc list-inside">
                   <li><strong>Malicious:</strong> {urlLookup.malicious}</li>
                   <li><strong>Suspicious:</strong> {urlLookup.suspicious}</li>
