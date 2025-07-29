@@ -2,21 +2,36 @@ import React, { useState } from 'react';
 import ApacheHandler from '../handlers/ApacheHandler';
 import SeverityFilterDropdown from '../components/filters/SeverityFilterDropdown';
 import TimeFilter from '../components/filters/TimeFilter';
-import StatusFilterDropdown from '../components/filters/StatusFilterDropdown';
+import StatusFilter from '../components/filters/StatusFilter';
+
 const Apache = ({ alerts }) => {
-  const [selectedSeverity, setSelectedSeverity] = useState("All Severity");
+  const [alertList, setAlertList] = useState(alerts || []);
+  const [selectedSeverity, setSelectedSeverity] = useState("All");
   const [selectedTimeRange, setSelectedTimeRange] = useState(null);
-  const [selectedStatus, setSelectedStatus] = useState("All Status");
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   const now = new Date();
 
-  const filteredAlerts = alerts.filter((alert) => {
+  const handleStatusUpdate = (id, newStatus) => {
+    setAlertList((prev) =>
+      prev.map((alert) =>
+        alert.alert_id === id ? { ...alert, status: newStatus } : alert
+      )
+    );
+  };
+
+  const filteredAlerts = alertList.filter((alert) => {
     const alertTime = new Date(alert.generated_at);
     const matchTime = selectedTimeRange === null || (now - alertTime) / 60000 <= selectedTimeRange;
 
-    const matchSeverity = selectedSeverity === "All Severity" || alert.severity?.toLowerCase() === selectedSeverity.toLowerCase();
+    const matchSeverity =
+      selectedSeverity === "All" ||
+      alert.severity?.toLowerCase() === selectedSeverity.toLowerCase();
 
-    const matchStatus = selectedStatus === "All Status" || alert.status?.toLowerCase() === selectedStatus.toLowerCase();
+    const matchStatus =
+      selectedStatus === "All" ||
+      alert.status?.toLowerCase() === selectedStatus.toLowerCase();
+
     return matchTime && matchSeverity && matchStatus;
   });
 
@@ -30,16 +45,11 @@ const Apache = ({ alerts }) => {
           selected={selectedSeverity}
           onSelect={setSelectedSeverity}
         />
-        <StatusFilterDropdown
-          selected={selectedStatus}
-          onSelect={setSelectedStatus}
-        />
-        <TimeFilter
-          selected={selectedTimeRange}
-          onSelect={setSelectedTimeRange}
-        />
+        <StatusFilter selected={selectedStatus} onSelect={setSelectedStatus} />
+        <TimeFilter selected={selectedTimeRange} onSelect={setSelectedTimeRange} />
       </div>
-      <ApacheHandler alerts={filteredAlerts} />
+
+      <ApacheHandler alerts={filteredAlerts} onStatusUpdate={handleStatusUpdate} />
     </div>
   );
 };

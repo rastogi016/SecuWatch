@@ -5,26 +5,34 @@ import { VscThreeBars } from "react-icons/vsc";
 
 const Footer = () => {
   return (
-    <div className="w-full absolute bottom-0 h-20 bg-[#030712] text-gray-300 py-4 px-6">
-      <div className="flex flex-col md:flex-row justify-between items-center h-full">
-        <span className="mb-2 md:mb-0 text-sm">
-          © {new Date().getFullYear()} <strong>SecuWatch<sub>v1.1</sub></strong> by <strong>ThreatSage</strong>, All rights reserved.
+    <div className="w-full bg-[#030712] text-gray-300 py-4">
+      <div className="flex flex-col md:flex-row justify-center items-center text-sm">
+        <span className="mb-2 md:mb-0 md:mr-10">
+          © {new Date().getFullYear()} <strong>SecuWatch<sub>v1.1</sub></strong> by <strong>ThreatSage </strong>
         </span>
-        <div className="flex space-x-6 text-sm items-center">
+        <div className="flex space-x-6 items-center">
           <a
             href="https://github.com/rastogi016/SecuWatch"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline hover:text-white flex items-center gap-1"
+            className="hover:underline hover:text-blue-400 flex items-center gap-1"
           >
             <FaGithub />
             GitHub
           </a>
-          <a href="/privacy" target="__blank" className="hover:underline hover:text-white flex items-center gap-1">
+          <a
+            href="/privacy"
+            target="__blank"
+            className="hover:underline hover:text-blue-400 flex items-center gap-1"
+          >
             <FcPrivacy />
             Privacy
           </a>
-          <a href="/terms" target="__blank" className="hover:underline hover:text-white flex items-center gap-1">
+          <a
+            href="/terms"
+            target="__blank"
+            className="hover:underline hover:text-blue-400 flex items-center gap-1"
+          >
             <VscThreeBars />
             Terms
           </a>
@@ -33,5 +41,6 @@ const Footer = () => {
     </div>
   );
 };
+
 
 export default Footer;

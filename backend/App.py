@@ -48,7 +48,7 @@ class StatusUpdateRequest(BaseModel):
     status: str
 
 @app.patch("/alerts/{source}/{alert_id}/status")
-def change_alert_status(source: str, alert_id: str, req: StatusUpdateRequest):
+async def change_alert_status(source: str, alert_id: str, req: StatusUpdateRequest):
     if req.status not in ["New", "In Progress", "Resolved"]:
         raise HTTPException(status_code=400, detail="Invalid status")
 
@@ -57,4 +57,13 @@ def change_alert_status(source: str, alert_id: str, req: StatusUpdateRequest):
     if not success:
         raise HTTPException(status_code=404, detail="Alert not found or update failed")
 
+    # Broadcast status update to all clients
+    await ws_manager.broadcast({
+        "type": "status_update",
+        "id": alert_id,
+        "source": source,
+        "status": req.status
+    })
+
     return {"message": f"Status updated to {req.status}"}
+

@@ -16,15 +16,15 @@ const Sidebar = () => {
       </div>
 
       {/* Static Sidebar for md and up */}
-      <div className="hidden md:flex w-52 flex-col h-screen">
+      <div className="hidden md:flex w-52 flex-col h-7">
         <Logo />
         <NavItems />
       </div>
 
       {/* Sliding Sidebar for mobile */}
       {isOpen && (
-        <div className="fixed inset-0 bg-opacity-95 z-10 bg-[#030712]">
-          <div className="w-60 h-full pr-4 flex flex-col">
+        <div className="fixed inset-0 bg-opacity-80 z-10 bg-[#030712]">
+          <div className="w-64 h-full pr-6 flex flex-col">
             {/* Close button inside sidebar */}
             <div className="flex justify-end md:hidden">
               <button onClick={() => setIsOpen(false)} className="text-white text-xl mt-4">

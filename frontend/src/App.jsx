@@ -16,7 +16,18 @@ import Terms from  './pages/terms';
 
 const App = () => {
   const [alerts, setAlerts] = useState({ apache: [], windows: [], linux: [] });
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState( !!localStorage.getItem("token"));
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+
   const seenAlertIds = useRef(new Set());
   const navigate = useNavigate();
 
@@ -27,7 +38,13 @@ const App = () => {
 
   const handleLogin = () => {
     setIsAuthenticated(true);
-    navigate("/");
+    navigate("/dashboard");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    navigate("/login");
   };
 
   useAlertWebSocket((newAlert) => {
@@ -71,8 +88,8 @@ const App = () => {
       <Route path="/signup" element={<Signup />} />
 
       {/* Protected Routes Wrapper */}
-      <Route element={<ProtectedRoute isAuthenticated={isAuthenticated}><ProtectedLayout /></ProtectedRoute>}>
-        <Route path="/" element={<Dashboard alerts={alerts} />} />
+      <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} ><ProtectedLayout onLogout={handleLogout} /></ProtectedRoute>}>
+        <Route path="/dashboard" element={<Dashboard alerts={alerts} />} />
         <Route path="/analytics" element={<Analytics alerts={alerts} />} />
         <Route path="/apache" element={<Apache alerts={alerts.apache} />} />
         <Route path="/windows" element={<Windows alerts={alerts.windows} />} />
@@ -83,7 +100,7 @@ const App = () => {
       <Route path="/terms" element={<Terms />} />
 
       {/* Catch All */}
-      <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
+      <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
     </Routes>
   );
 };

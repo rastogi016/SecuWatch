@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ApacheLogCard = ({ alert}) => {
+const ApacheLogCard = ({ alert, onStatusUpdate }) => {
   const [showRaw, setShowRaw] = useState(false);
   const [showCTI, setShowCTI] = useState(false);
   const [status, setStatus] = useState(alert.status || "New");
-  const [isUpdating, setIsUpdating] = useState(false);
 
   const {
     alert_id,
@@ -44,23 +43,22 @@ const ApacheLogCard = ({ alert}) => {
   const ipLookup = cti?.ip_lookup;
   const urlLookup = cti?.url_lookup;
 
+
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
     setStatus(newStatus);
-    setIsUpdating(true);
+
     try {
       await axios.patch(
-        `http://localhost:8000/alerts/${source}/${alert_id}/status`,
+        `http://localhost:8000/alerts/${alert.source}/${alert.alert_id}/status`,
         { status: newStatus },
-        { headers: { "Content-Type": "application/json" } }
       );
-    } catch (error) {
-      console.error("Failed to update status:", error);
-      // Optional: Revert status on failure
-    } finally {
-      setIsUpdating(false);
-    }
-    console.log("Updating status for", source, alert_id, "→", newStatus);
+      onStatusUpdate(alert.alert_id, newStatus);
+      } catch (error) {
+        console.error('Failed to update status:', error);
+      } finally {
+      }
+    console.log('Updating status for', alert.source, alert.alert_id, '→', newStatus);
   };
 
   return (
@@ -69,22 +67,27 @@ const ApacheLogCard = ({ alert}) => {
       <div className="flex flex-wrap justify-between items-center gap-3">
         <h2 className="text-lg font-semibold">{alert_type}</h2>
         <div className="flex gap-2 items-center">
+
+          {/* Status Dropdown */}
           <select
-            value={alert.status}
+            value={status}
             onChange={handleStatusChange}
-            disabled={isUpdating}
             className="px-2 py-1 text-sm bg-gray-700 text-white rounded border border-gray-500"
           >
-            <option value="New">🟢 New</option>
-            <option value="In Progress">🟡 In Progress</option>
-            <option value="Resolved">✅ Resolved</option>
+            <option value="New">New</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
           </select>
+
+          {/* Show Raw Alert */}
           <button
             onClick={() => setShowRaw(!showRaw)}
             className="px-3 py-1 text-sm bg-purple-900 hover:bg-purple-600 text-gray-300 hover:text-white rounded transition"
           >
             {showRaw ? "Hide Raw Log" : "Show Raw Log"}
           </button>
+
+          {/* Show Cti Info */}
           <button
             onClick={() => setShowCTI(!showCTI)}
             className="px-3 py-1 text-sm bg-purple-900 hover:bg-purple-600 text-gray-300 hover:text-white rounded transition"
