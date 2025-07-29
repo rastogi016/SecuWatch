@@ -37,7 +37,7 @@ const Login = ({ onLogin }) => {
   return (
     <div className="gradient-bg-login min-h-screen flex flex-col md:flex-row">
       <div className="w-full md:w-2/3 flex flex-col justify-center items-center px-10 py-12">
-      <img src="../../public/secuwatch-white.png" alt="SecuWatchLogo" className="mb-28 md:hidden max-h-44" />
+      <img src="/secuwatch-white.png" alt="SecuWatchLogo" className="mb-28 md:hidden max-h-44" />
         <form onSubmit={handleSubmit} className="p-16 border-2 border-white rounded-lg">
           <h2 className="text-2xl font-bold text-white text-center mb-8">Login to Your Account</h2>
           {error && <p className="text-yellow-400">{error}</p>}
