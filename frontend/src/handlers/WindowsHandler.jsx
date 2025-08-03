@@ -1,12 +1,23 @@
 import WindowsLogCard from '../logCards/WindowsLogCard'
 
-const WindowsHandler = ({ alerts}) => {
+const WindowsHandler = ({ alerts, onStatusUpdate }) => {
+  // Only show alerts with required fields
+  const validAlerts = alerts.filter(
+    alert => alert && alert.alert_id && alert.generated_at
+  );
+
   return (
     <div className="mt-6 pb-20 font-jetBrains_mono">
-      {alerts.length === 0 ? (
+      {validAlerts.length === 0 ? (
         <p className="text-gray-500 text-sm">No alerts yet....</p>
       ) : (
-        alerts.map((alert, idx) => <WindowsLogCard key={idx} alert={alert} />)
+        validAlerts.map((alert) => (
+          <WindowsLogCard
+            key={alert.alert_id}
+            alert={alert}
+            onStatusUpdate={onStatusUpdate}
+          />
+        ))
       )}
     </div>
   );

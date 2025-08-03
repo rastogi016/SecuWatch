@@ -1,6 +1,6 @@
+# websocket_manager.py
 from fastapi import WebSocket
 from typing import List
-
 
 class WebSocketManager:
     def __init__(self):
@@ -19,4 +19,8 @@ class WebSocketManager:
     async def broadcast(self, message: dict):
         print(f"[WS] Broadcasting to {len(self.active_connections)} clients")
         for connection in self.active_connections:
-            await connection.send_json(message)
+            try:
+                await connection.send_json(message)
+            except Exception as e:
+                print(f"[WS] Broadcast error: {e}")
+                self.disconnect(connection)

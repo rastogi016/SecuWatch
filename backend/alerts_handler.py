@@ -1,69 +1,60 @@
-import os
-import json
 from typing import Dict, List
+from fastapi import FastAPI
+from bson import ObjectId
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-ALERTS_DIR = os.path.join(BASE_DIR, "alerts")
 
-def update_alert_status(alert_id: str, source: str, new_status: str) -> bool:
-    source_dir = os.path.join(ALERTS_DIR, source)
-    alert_file = os.path.join(source_dir, alert_id + ".json")
+VALID_STATUSES = {"New", "In Progress", "Resolved"}
 
-    print(f"[DEBUG] Looking for alert file: {alert_file}")
-    print(f"[DEBUG] File exists? {os.path.exists(alert_file)}")
-    
-    if not os.path.exists(alert_file):
-        print(f"[DEBUG] Alert file not found: {alert_file}")
-        return False
-
-    if new_status not in {"New", "In Progress", "Resolved"}:
-        print(f"[DEBUG] Invalid status: {new_status}")
-        return False
-
+def get_alert_collection(app: FastAPI, source: str):
     try:
-        with open(alert_file, "r") as f:
-            alert = json.load(f)
-
-        alert["status"] = new_status
-
-        with open(alert_file, "w") as f:
-            json.dump(alert, f, indent=2)
-
-        print(f"[DEBUG] Updated status of {alert_id} to {new_status}")
-        return True
-
+        db = app.state.mongo_db
+        collection = {
+            "apache": db["apache_alerts"],
+            "windows": db["windows_alerts"],
+            "linux": db["linux_alerts"]
+        }.get(source)
+        if collection is None:
+            raise ValueError(f"Unknown source: {source}")
+        return collection
     except Exception as e:
-        print(f"[DEBUG] Failed to update status for {alert_id}: {e}")
+        print(f"Error in get_alert_collection: {type(e).__name__}: {e}")
+        return None
+
+def serialize_doc(doc):
+    try:
+        doc = dict(doc)
+        if '_id' in doc and isinstance(doc['_id'], ObjectId):
+            doc['_id'] = str(doc['_id'])
+        return doc
+    except Exception as e:
+        print(f"Error in serialize_doc: {type(e).__name__}: {e}")
+        return {}
+
+async def update_alert_status(alert_id: str, source: str, new_status: str, app: FastAPI) -> bool:
+    try:
+        if new_status not in VALID_STATUSES:
+            print(f"Invalid status: {new_status}")
+            return False
+        collection = get_alert_collection(app, source)
+        if collection is None:
+            print(f"Collection not found for source: {source}")
+            return False
+        result = await collection.update_one(
+            {"alert_id": alert_id},
+            {"$set": {"status": new_status}}
+        )
+        return result.modified_count > 0
+    except Exception as e:
+        print(f"Error in update_alert_status: {type(e).__name__}: {e}")
         return False
 
-def get_all_alerts_grouped_by_source() -> Dict[str, List[dict]]:
-    grouped_alerts = {"apache": [], "windows": [], "linux": []}
-
-    for source in grouped_alerts.keys():
-        source_dir = os.path.join(ALERTS_DIR, source)
-        print(f"[DEBUG] Checking: {source_dir}")
-
-        if not os.path.exists(source_dir):
-            print(f"[DEBUG] Missing directory: {source_dir}")
-            continue
-
-        for filename in os.listdir(source_dir):
-            if not filename.endswith(".json"):
-                continue
-
-            file_path = os.path.join(source_dir, filename)
-            if not os.path.isfile(file_path):
-                continue
-
-            try:
-                with open(file_path, "r") as f:
-                    alert = json.load(f)
-                    if "status" not in alert:
-                        alert["status"] = "New"
-
-                    grouped_alerts[source].append(alert)
-                    print(f"[DEBUG] Loaded {filename} into {source}")
-            except Exception as e:
-                print(f"[DEBUG] Failed to load {filename}: {e}")
-
-    return grouped_alerts
+async def get_all_alerts_grouped_by_source(app: FastAPI) -> Dict[str, List[dict]]:
+    try:
+        return {
+            "apache": [serialize_doc(doc) for doc in await get_alert_collection(app, "apache").find().to_list(1000)],
+            "windows": [serialize_doc(doc) for doc in await get_alert_collection(app, "windows").find().to_list(1000)],
+            "linux": [serialize_doc(doc) for doc in await get_alert_collection(app, "linux").find().to_list(1000)]
+        }
+    except Exception as e:
+        print(f"Error in get_all_alerts_grouped_by_source: {type(e).__name__}: {e}")
+        return {"apache": [], "windows": [], "linux": []}
