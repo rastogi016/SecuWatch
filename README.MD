@@ -8,11 +8,13 @@
 
 ![Analytics Tab](assets/Analytics.png)
 
-![Apache Alerts](assets/Apache.png)
+![Analytics Tab](assets/Analytics2.png)
 
-![Windows Alerts](assets/Windows.png)
+![Apache Alerts](assets/ApacheLogs.png)
 
-![Linux Alerts](assets/Linux.png)
+![Windows Alerts](assets/WindowsLogs.png)
+
+![Linux Alerts](assets/LinuxLogs.png)
 
 ---
 
