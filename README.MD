@@ -1,4 +1,4 @@
-# 🛡️ SecuWatch: Threat Detection & Response Framework (v1.0)
+# 🛡️ SecuWatch: Threat Detection & Response Framework (v1.1)
 
 **SecuWatch** is a full-stack cybersecurity tool for real-time log analysis, threat detection, and alert visualization. It integrates **FastAPI** (backend), **React + Tailwind CSS** (frontend), and **WebSockets** for live alert streaming. It supports authentication, CTI enrichment, and analytics dashboards — all in one lightweight solution.
 
@@ -256,3 +256,6 @@ Optional (Railway): add a `Procfile` with: `web: uvicorn backend.App:app --host 
   ```
 
 4) Frontend API/WS are already parameterized to use these variables and fall back to localhost when not set.
+
+---
+
