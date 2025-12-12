@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:8000/alerts";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_URL = `${API_BASE.replace(/\/$/, "")}/alerts`;
 
 export const fetchAlerts = async (token) => {
   const res = await fetch(API_URL, {
