@@ -96,11 +96,13 @@ const WindowsLogCard = ({ alert, onStatusUpdate }) => {
 
         {/* Raw Log */}
         {showRaw && (
-          <div className="bg-black p-4 rounded-md flex-1 font-mono text-sm text-gray-200 overflow-auto max-h-60 border border-gray-700">
+          <div className="bg-black p-4 rounded-md flex-1 font-mono text-sm text-gray-200 border border-gray-700 max-h-60 overflow-y-auto overflow-x-auto max-w-full">
             <span className="block text-yellow-400 font-semibold mb-2">Raw Log</span>
-            <code className="whitespace-pre-wrap break-words">
-              {raw_log ? JSON.stringify(raw_log, null, 2) : "No raw log available."}
-            </code>
+            <pre className="whitespace-pre-wrap break-words">
+              <code className="break-all">
+                {raw_log ? JSON.stringify(raw_log, null, 2) : "No raw log available."}
+              </code>
+            </pre>
           </div>
         )}
       </div>

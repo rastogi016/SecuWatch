@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from alert_handler.alert_writer import write_alert
+from backend.alert_writer import write_alert
 
 
 def collect_linux_logs(log_file_path):

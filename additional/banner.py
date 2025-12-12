@@ -22,7 +22,7 @@ def bannerSecuWatch():
 
     # Subtext (tagline, version, by ThreatSage)
     tagline = "Real-Time Threat Detection"
-    version = "Version 1.0"
+    version = "Version 1.1"
     byline = "by ThreatSage"
 
     for text in [tagline, version, byline]:

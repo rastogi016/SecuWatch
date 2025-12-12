@@ -1,7 +1,7 @@
 import time
 import win32evtlog
 from detectors.windows_detector import parse_windows_log
-from alert_handler.alert_writer import write_alert
+from backend.alert_writer import write_alert
 
 
 def monitor_windows_logs():

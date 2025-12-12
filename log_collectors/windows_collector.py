@@ -1,6 +1,6 @@
 import csv
 import os
-from alert_handler.alert_writer import write_alert
+from backend.alert_writer import write_alert
 
 
 def collect_windows_logs(file_path):

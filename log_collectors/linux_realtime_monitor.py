@@ -1,10 +1,9 @@
-import time
+import asyncio
 import os
 from detectors.linux_detector import parse_linux_log
-from alert_handler.alert_writer import write_alert
+from backend.alert_writer import write_alert
 
-
-def monitor_linux_logs(log_file):
+async def monitor_linux_logs(log_file):
     print("[*] Starting Linux Log Monitoring...")
 
     try:
@@ -15,13 +14,13 @@ def monitor_linux_logs(log_file):
             while True:
                 line = f.readline()
                 if not line:
-                    time.sleep(0.5)
+                    await asyncio.sleep(0.5)
                     continue
 
                 alert = parse_linux_log(line)
 
                 if alert:
-                    write_alert("linux", alert)
+                    await write_alert("linux", alert)
 
     except KeyboardInterrupt:
         print("\n[!] Stopped Linux Log Monitoring.")

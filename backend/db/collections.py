@@ -1,7 +1,5 @@
 #backend/db/collections.py
 
-# Deprecated: DB client creation here. Use app.state.mongo_db from FastAPI lifecycle.
-
 def get_users_collection(app):
     return app.state.mongo_db["users"]
 

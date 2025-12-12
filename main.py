@@ -1,3 +1,4 @@
+import asyncio
 from log_collectors.apache_collector import collect_apache_logs
 from log_collectors.windows_collector import collect_windows_logs
 from log_collectors.linux_collector import collect_linux_logs
@@ -35,11 +36,11 @@ def realtime_mode():
         for source in sources:
             source = source.strip()
             if source == "apache":
-                monitor_apache_logs("sample_logs/apache_sample.log")
+                asyncio.run(monitor_apache_logs("sample_logs/apache_sample.log"))
             elif source == "windows":
-                monitor_windows_logs()
+                asyncio.run(monitor_windows_logs("sample_logs/windows_sample.evtx"))
             elif source == "linux":
-                monitor_linux_logs("sample_logs/linux_auth.log")
+                asyncio.run(monitor_linux_logs("sample_logs/linux_auth.log"))
             else:
                 print(f"[!] Unknown source: {source}")
     except KeyboardInterrupt:
@@ -50,12 +51,14 @@ if __name__ == "__main__":
 
     bannerSecuWatch()
     try:
-        mode = input("Select Mode [static/realtime]: ").strip().lower()
-        if mode == "static":
-            static_mode()
-        elif mode == "realtime":
-            realtime_mode()
-        else:
-            print("[!] Invalid mode")
+        # mode = input("Select Mode [static/realtime]: ").strip().lower()
+        # if mode == "static":
+        #     static_mode()
+        # elif mode == "realtime":
+        #     realtime_mode()
+        # else:
+        #     print("[!] Invalid mode")
+        asyncio.run(monitor_linux_logs("sample_logs/linux_auth.log"))
+        # asyncio.run(monitor_linux_logs("sample_logs/linux_auth.log"))
     except KeyboardInterrupt:
         print("\n[!] Exiting the Tool, SecuWatch[!]")
