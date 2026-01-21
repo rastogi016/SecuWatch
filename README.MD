@@ -225,39 +225,3 @@ MIT License © Threat Sage
 **Yash Rastogi**  
 [LinkedIn](https://www.linkedin.com/in/yashrastogi11) · [GitHub](https://github.com/rastogi016)
 
----
-
-## ☁️ Deploy (Vercel + Backend Host)
-
-Because the backend uses FastAPI WebSockets, deploy the frontend on Vercel and the backend on a host that supports long-lived connections (Render, Railway, Fly.io, etc.).
-
-1) Backend (Render/Railway)
-- Create a new Web Service from this repo.
-- Runtime: Python 3.11+. Start command:
-  ```bash
-  uvicorn backend.App:app --host 0.0.0.0 --port $PORT
-  ```
-- Env vars: set `MONGODB_URI` and any CTI keys.
-- Expose port: use platform-provided `$PORT`.
-
-Optional (Railway): add a `Procfile` with: `web: uvicorn backend.App:app --host 0.0.0.0 --port $PORT`.
-
-2) Frontend (Vercel)
-- Project root: `frontend/`
-- Build Command: `npm run build`
-- Output Directory: `dist`
-- Env vars (Project → Settings → Environment Variables):
-  - `VITE_API_BASE_URL` → e.g. `https://<your-backend-host>`
-  - `VITE_WS_URL` → e.g. `wss://<your-backend-host>/ws/alerts`
-
-3) Local env
-- See `frontend/.env.example`. For local dev create `frontend/.env` or `.env.local`:
-  ```
-  VITE_API_BASE_URL=http://localhost:8000
-  VITE_WS_URL=ws://localhost:8000/ws/alerts
-  ```
-
-4) Frontend API/WS are already parameterized to use these variables and fall back to localhost when not set.
-
----
-
